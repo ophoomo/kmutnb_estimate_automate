@@ -22,7 +22,7 @@ async function login_kmutnb(username, password) {
         else throw response;
     }
   } catch(err) {
-    return err;
+    return undefined;
   }
 }
 
