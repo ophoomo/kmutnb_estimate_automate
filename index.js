@@ -1,8 +1,16 @@
 require("dotenv").config();
+require("./src/loggers");
 const express = require("express");
 const app = express();
-const { login_kmutnb, get_class, get_estimate, submit_estimate_form1, line_notify } = require("./src/api");
+const {
+  login_kmutnb,
+  get_class,
+  get_estimate,
+  submit_estimate_form1,
+  line_notify,
+} = require("./src/api");
 const { random_rate } = require("./src/utils");
+const logger = require("./src/loggers");
 
 app.get("/", (req, res) => {
   res.json({ status: true });
@@ -38,15 +46,18 @@ app.get("/estimate", async (req, res) => {
           const questiontype = estimate.questiontype;
           answer = { ...answer, [questiontype + questionid]: random_rate() };
         }
-        console.log(answer);
-        // const response = await submit_estimate_form1(token, classid, evaluateid, officerid, answer);
-        // if (response.status == 200) {
-        //     await line_notify(`ทำแบบทดสอบวิชา ${coursename} เสร็จสิ้น`);
-        // } else {
-        //     await line_notify("เกิดข้อผิดพลาด ไม่สามารถทำแบบทดสอบได้");
-        // }
-            await line_notify(`ทำแบบทดสอบวิชา ${coursename} เสร็จสิ้น`);
-            await line_notify("เกิดข้อผิดพลาด ไม่สามารถทำแบบทดสอบได้");
+        const response = await submit_estimate_form1(
+          token,
+          classid,
+          evaluateid,
+          officerid,
+          answer
+        );
+        if (response.status == 200) {
+          await line_notify(`ทำแบบทดสอบวิชา ${coursename} เสร็จสิ้น`);
+        } else {
+          await line_notify("เกิดข้อผิดพลาด ไม่สามารถทำแบบทดสอบได้");
+        }
       }
     }
   }
@@ -54,6 +65,6 @@ app.get("/estimate", async (req, res) => {
   res.json({ status: true, message: "success" });
 });
 
-app.listen(3000, () => console.log("Server ready on port 3000."));
+app.listen(3000, () => logger.info("Start Server on Port 3000"));
 
 module.exports = app;

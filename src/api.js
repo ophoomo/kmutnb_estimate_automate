@@ -2,6 +2,7 @@ const axios = require("axios");
 const ip = require("ip");
 
 const { encrypt } = require("./encryption");
+const logger = require("./loggers");
 
 const BASE_PATH = "https://reg.kmutnb.ac.th/regapiweb1/api/th/";
 
@@ -18,10 +19,11 @@ async function login_kmutnb(username, password) {
       param: data,
     });
     if (response) {
-        if (response.status == 200) return response.data.token;
-        else throw response;
+      if (response.status == 200) return response.data.token;
+      else throw response;
     }
-  } catch(err) {
+  } catch (err) {
+    logger.error(err);
     return undefined;
   }
 }
@@ -33,7 +35,8 @@ async function get_class(token) {
     });
     if (response.status == 200) return response.data;
     else throw response;
-  } catch {
+  } catch (err) {
+    logger.error(err);
     return [];
   }
 }
@@ -49,7 +52,8 @@ async function get_estimate(token, classid, evaluateid, officerid) {
     );
     if (response.status == 200) return response.data;
     else throw response;
-  } catch {
+  } catch (err) {
+    logger.error(err);
     return [];
   }
 }
@@ -74,7 +78,8 @@ async function submit_estimate_form1(
       }
     );
     return response;
-  } catch {
+  } catch (err) {
+    logger.error(err);
     return undefined;
   }
 }
@@ -99,7 +104,8 @@ async function submit_estimate_form2(
       }
     );
     return response;
-  } catch {
+  } catch (err) {
+    logger.error(err);
     return undefined;
   }
 }
@@ -119,7 +125,8 @@ async function line_notify(message) {
       );
       return response;
     } else return "Not Have Token LINE_NOTIFY";
-  } catch {
+  } catch (err) {
+    logger.error(err);
     return undefined;
   }
 }

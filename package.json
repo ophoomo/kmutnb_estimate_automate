@@ -4,7 +4,8 @@
     "crypto-js": "~3.3.0",
     "dotenv": "~16.4.5",
     "express": "~4.19.2",
-    "ip": "~2.0.1"
+    "ip": "~2.0.1",
+    "winston": "~3.13.0"
   },
   "name": "kmutnb_estimate_automate",
   "version": "1.0.0",
@@ -14,5 +15,5 @@
   },
   "author": "",
   "license": "MIT",
-  "description": ""
+  "description": "This project is created to facilitate automatic assessment in cases where students forget to complete assessments, which may result in delayed grading."
 }
