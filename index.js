@@ -18,8 +18,7 @@ app.get("/estimate", async (req, res) => {
     });
 
   const token = await login_kmutnb(username, password);
-  console.log(token);
-  if (token) return res.json({ status: false, message: "can't login" });
+  if (!token) return res.json({ status: false, message: "can't login" });
 
   const subjects = await get_class(token);
   if (!subjects)
