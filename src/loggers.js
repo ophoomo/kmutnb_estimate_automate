@@ -1,4 +1,4 @@
-const { createLogger, format, transports, log } = require('winston');
+const { createLogger, format, transports, log } = require("winston");
 
 const logger = createLogger({
   level: "info",

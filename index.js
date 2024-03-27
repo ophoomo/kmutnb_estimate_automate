@@ -46,18 +46,20 @@ app.get("/estimate", async (req, res) => {
           const questiontype = estimate.questiontype;
           answer = { ...answer, [questiontype + questionid]: random_rate() };
         }
-        const response = await submit_estimate_form1(
-          token,
-          classid,
-          evaluateid,
-          officerid,
-          answer
-        );
-        if (response.status == 200) {
-          await line_notify(`ทำแบบทดสอบวิชา ${coursename} เสร็จสิ้น`);
-        } else {
-          await line_notify("เกิดข้อผิดพลาด ไม่สามารถทำแบบทดสอบได้");
-        }
+        logger.debug(answer);
+        await line_notify(`ทำแบบทดสอบวิชา ${coursename} เสร็จสิ้น`);
+        // const response = await submit_estimate_form1(
+        //   token,
+        //   classid,
+        //   evaluateid,
+        //   officerid,
+        //   answer
+        // );
+        // if (response.status == 200) {
+        //   await line_notify(`ทำแบบทดสอบวิชา ${coursename} เสร็จสิ้น`);
+        // } else {
+        //   await line_notify("เกิดข้อผิดพลาด ไม่สามารถทำแบบทดสอบได้");
+        // }
       }
     }
   }
