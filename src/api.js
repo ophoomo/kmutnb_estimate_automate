@@ -6,6 +6,8 @@ const logger = require("./loggers");
 
 const BASE_PATH = "https://reg.kmutnb.ac.th/regapiweb1/api/th/";
 
+axios.defaults.withCredentials = true;
+
 async function login_kmutnb(username, password) {
   const data = encrypt(
     JSON.stringify({
